@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 const prisma = new PrismaClient();
@@ -32,7 +31,7 @@ async function main() {
   await prisma.ticketType.create({
     data: {
       name: "Presencial",
-      price: faker.datatype.number(),
+      price: 250,
       isRemote: false,
       includesHotel: false,
     },
@@ -41,7 +40,7 @@ async function main() {
     await prisma.ticketType.create({
       data: {
         name: "Online",
-        price: faker.datatype.number(),
+        price: 100,
         isRemote: true,
         includesHotel: false,
       },
