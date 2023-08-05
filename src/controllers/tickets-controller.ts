@@ -1,4 +1,5 @@
 import { AuthenticatedRequest } from "@/middlewares";
+import { TicketTypeId } from "@/protocols";
 import ticketService from "@/services/tickets-service";
 import { Response } from "express";
 import httpStatus from "http-status";
@@ -28,8 +29,8 @@ export async function getTickets(req: AuthenticatedRequest, res: Response) {
 export async function createTicket(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
 
-  //TODO validação do JOI
-  const { ticketTypeId } = req.body;
+
+  const { ticketTypeId } = req.body as TicketTypeId;
 
   if (!ticketTypeId) {
     return res.sendStatus(httpStatus.BAD_REQUEST);
