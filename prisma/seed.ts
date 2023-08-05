@@ -1,8 +1,21 @@
+import { faker } from '@faker-js/faker';
 import { PrismaClient } from "@prisma/client";
 import dayjs from "dayjs";
 const prisma = new PrismaClient();
 
 async function main() {
+  await prisma.address.deleteMany({});
+  await prisma.payment.deleteMany({});
+  await prisma.ticket.deleteMany({});
+  await prisma.enrollment.deleteMany({});
+  await prisma.event.deleteMany({});
+  await prisma.session.deleteMany({});
+  await prisma.booking.deleteMany({});
+  await prisma.user.deleteMany({});
+  await prisma.ticketType.deleteMany({});
+  await prisma.room.deleteMany({});
+  await prisma.hotel.deleteMany({});
+
   let event = await prisma.event.findFirst();
   if (!event) {
     event = await prisma.event.create({
@@ -15,7 +28,25 @@ async function main() {
       },
     });
   }
-
+  
+  await prisma.ticketType.create({
+    data: {
+      name: "Presencial",
+      price: faker.datatype.number(),
+      isRemote: false,
+      includesHotel: false,
+    },
+  });
+  
+    await prisma.ticketType.create({
+      data: {
+        name: "Online",
+        price: faker.datatype.number(),
+        isRemote: true,
+        includesHotel: false,
+      },
+    });
+    
   console.log({ event });
 }
 
