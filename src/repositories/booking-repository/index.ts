@@ -1,4 +1,5 @@
 import { prisma } from "@/config";
+import { BookingCounts } from "@/protocols";
 import { Booking } from "@prisma/client";
 
 type CreateParams = Omit<Booking, "id" | "createdAt" | "updatedAt">;
@@ -11,6 +12,14 @@ async function create({ roomId, userId }: CreateParams): Promise<Booking> {
       userId,
     }
   });
+}
+
+async function countBooking(): Promise<BookingCounts[]> {
+  return prisma.$queryRaw`
+  SELECT COUNT(*) AS "bookedRooms", "Room"."hotelId" FROM "Booking"
+  JOIN "Room" ON "Booking"."roomId" = "Room".id
+  GROUP BY "Room"."hotelId";`
+  ;
 }
 
 async function findByRoomId(roomId: number) {
@@ -55,6 +64,7 @@ const bookingRepository = {
   findByRoomId,
   findByUserId,
   upsertBooking,
+  countBooking,
 };
 
 export default bookingRepository;

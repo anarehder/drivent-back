@@ -4,7 +4,19 @@ async function findAllByHotelId(hotelId: number) {
   return prisma.room.findMany({
     where: {
       hotelId,
-    }
+    },
+    include: {
+      Booking: true,
+    },
+  });
+}
+
+async function countCapacity() {
+  return prisma.room.groupBy({
+    by: ["hotelId"],
+    _sum: {
+      capacity: true,
+    },
   });
 }
 
@@ -18,7 +30,8 @@ async function findById(roomId: number) {
 
 const roomRepository = {
   findAllByHotelId,
-  findById
+  findById,
+  countCapacity
 };
 
 export default roomRepository;

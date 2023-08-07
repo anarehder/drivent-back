@@ -3,6 +3,11 @@ export type ApplicationError = {
   message: string;
 };
 
+export type BookingCounts = {
+  bookedRooms: number;
+  hotelId: number;
+};
+
 export type ViaCEPAddress = {
   logradouro: string,
   complemento: string,

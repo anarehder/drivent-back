@@ -54,7 +54,82 @@ async function main() {
       includesHotel: true,
     },
   });
-    
+
+  const hotel1 = await prisma.hotel.create({
+    data: {
+      name: "Ibis",
+      image: 'https://www.ahstatic.com/photos/a747_ho_00_p_1024x768.jpg',
+    },
+  });
+  for (let i=0; i<6; i++){
+    await prisma.room.create({
+      data: {
+        name: 'Double',
+        capacity: 2,
+        hotelId: hotel1.id,
+      },
+    });
+  }
+  for (let i=0; i<3; i++){
+    await prisma.room.create({
+      data: {
+        name: 'Single',
+        capacity: 1,
+        hotelId: hotel1.id,
+      },
+    });
+  }
+
+  const hotel2 = await prisma.hotel.create({
+    data: {
+      name: "Holiday Inn",
+      image: 'https://holiday-inn-2.goianiahotels.com/data/Images/740x400/12827/1282709/1282709185/image-goiania-holiday-inn-2-8.JPEG',
+    },
+  });
+  for (let i=0; i<6; i++){
+    await prisma.room.create({
+      data: {
+        name: 'Double',
+        capacity: 2,
+        hotelId: hotel2.id,
+      },
+    });
+  }
+  for (let i=0; i<3; i++){
+    await prisma.room.create({
+      data: {
+        name: 'Single',
+        capacity: 1,
+        hotelId: hotel2.id,
+      },
+    });
+  }
+
+  const hotel3 = await prisma.hotel.create({
+    data: {
+      name: "Ibis Budget",
+      image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/116212496.jpg?k=34e32f8cd9c5c861dbb1b3903839650b4f7aba04457859911b62b95668700858&o=&hp=1',
+    },
+  });
+
+  for (let i=0; i<6; i++){
+    await prisma.room.create({
+      data: {
+        name: 'Double',
+        capacity: 2,
+        hotelId: hotel3.id,
+      },
+    });
+  }
+  for (let i=0; i<3; i++){
+    await prisma.room.create({
+      data: {
+        name: 'Single',
+        capacity: 1,
+        hotelId: hotel3.id,
+      },
+    });
+  }
   console.log({ event });
 }
 
