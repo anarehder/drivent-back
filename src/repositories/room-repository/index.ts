@@ -11,6 +11,15 @@ async function findAllByHotelId(hotelId: number) {
   });
 }
 
+async function countCapacity() {
+  return prisma.room.groupBy({
+    by: ["hotelId"],
+    _sum: {
+      capacity: true,
+    },
+  });
+}
+
 async function findById(roomId: number) {
   return prisma.room.findFirst({
     where: {
@@ -21,7 +30,8 @@ async function findById(roomId: number) {
 
 const roomRepository = {
   findAllByHotelId,
-  findById
+  findById,
+  countCapacity
 };
 
 export default roomRepository;
