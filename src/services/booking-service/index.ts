@@ -1,8 +1,10 @@
+/* eslint-disable boundaries/element-types */
 import { cannotBookingError, notFoundError } from "@/errors";
 import roomRepository from "@/repositories/room-repository";
 import bookingRepository from "@/repositories/booking-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import tikectRepository from "@/repositories/ticket-repository";
+import { redis } from "@/config";
 
 async function checkEnrollmentTicket(userId: number) {
   const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
@@ -41,6 +43,8 @@ async function bookingRoomById(userId: number, roomId: number) {
   await checkEnrollmentTicket(userId);
   await checkValidBooking(roomId);
 
+  redis.flushAll();
+
   return bookingRepository.create({ roomId, userId });
 }
 
@@ -51,6 +55,8 @@ async function changeBookingRoomById(userId: number, roomId: number) {
   if (!booking || booking.userId !== userId) {
     throw cannotBookingError();
   }
+
+  redis.flushAll();
 
   return bookingRepository.upsertBooking({
     id: booking.id,
