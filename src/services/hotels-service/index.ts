@@ -1,3 +1,4 @@
+/* eslint-disable boundaries/element-types */
 import hotelRepository from "@/repositories/hotel-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketRepository from "@/repositories/ticket-repository";
@@ -22,7 +23,7 @@ async function listHotels(userId: number) {
 }
 
 async function getHotels(userId: number) {
-  const hotelsKey = `hotels`;
+  const hotelsKey = "hotels";
   const hotelsFromRedis = await redis.get(hotelsKey);
   if (hotelsFromRedis) {
     const hotels = JSON.parse(hotelsFromRedis);
@@ -32,7 +33,7 @@ async function getHotels(userId: number) {
   await listHotels(userId);
 
   const hotels = await hotelRepository.findHotels();
-  if (!hotels || hotels.length === 0) return []
+  if (!hotels || hotels.length === 0) return [];
 
   const capacity = await roomRepository.countCapacity();
   const booking = await bookingRepository.countBooking();
@@ -65,7 +66,7 @@ async function getHotelsWithRooms(userId: number, hotelId: number) {
     throw notFoundError();
   }
 
-  await redis.setEx(hotelKey, 100 , JSON.stringify(hotel));
+  await redis.setEx(hotelKey, 100, JSON.stringify(hotel));
 
   return hotel;
 }

@@ -61,23 +61,26 @@ async function main() {
       image: 'https://www.ahstatic.com/photos/a747_ho_00_p_1024x768.jpg',
     },
   });
+  let roomsHotel1 = 101;
   for (let i=0; i<6; i++){
     await prisma.room.create({
       data: {
-        name: 'Double',
+        name: roomsHotel1.toString(),
         capacity: 2,
         hotelId: hotel1.id,
       },
     });
+    roomsHotel1++;
   }
   for (let i=0; i<3; i++){
     await prisma.room.create({
       data: {
-        name: 'Single',
+        name: roomsHotel1.toString(),
         capacity: 1,
         hotelId: hotel1.id,
       },
     });
+    roomsHotel1++;
   }
 
   const hotel2 = await prisma.hotel.create({
@@ -86,23 +89,27 @@ async function main() {
       image: 'https://holiday-inn-2.goianiahotels.com/data/Images/740x400/12827/1282709/1282709185/image-goiania-holiday-inn-2-8.JPEG',
     },
   });
+  let roomsHotel2 = 101;
+
   for (let i=0; i<6; i++){
     await prisma.room.create({
       data: {
-        name: 'Double',
+        name: roomsHotel2.toString(),
         capacity: 2,
         hotelId: hotel2.id,
       },
     });
+    roomsHotel2++;
   }
   for (let i=0; i<3; i++){
     await prisma.room.create({
       data: {
-        name: 'Single',
+        name: roomsHotel2.toString(),
         capacity: 1,
         hotelId: hotel2.id,
       },
     });
+    roomsHotel2++;
   }
 
   const hotel3 = await prisma.hotel.create({
@@ -111,24 +118,27 @@ async function main() {
       image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/116212496.jpg?k=34e32f8cd9c5c861dbb1b3903839650b4f7aba04457859911b62b95668700858&o=&hp=1',
     },
   });
+  let roomsHotel3 = 101;
 
   for (let i=0; i<6; i++){
     await prisma.room.create({
       data: {
-        name: 'Double',
+        name: roomsHotel3.toString(),
         capacity: 2,
         hotelId: hotel3.id,
       },
     });
+    roomsHotel2++;
   }
   for (let i=0; i<3; i++){
     await prisma.room.create({
       data: {
-        name: 'Single',
+        name: roomsHotel3.toString(),
         capacity: 1,
         hotelId: hotel3.id,
       },
     });
+    roomsHotel2++;
   }
   console.log({ event });
 }
