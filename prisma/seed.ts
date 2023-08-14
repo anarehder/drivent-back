@@ -14,6 +14,8 @@ async function main() {
   await prisma.ticketType.deleteMany({});
   await prisma.room.deleteMany({});
   await prisma.hotel.deleteMany({});
+  await prisma.activitie.deleteMany({});
+  await prisma.activitieBooking.deleteMany({});
 
   let event = await prisma.event.findFirst();
   if (!event) {
@@ -140,6 +142,65 @@ async function main() {
     });
     roomsHotel2++;
   }
+
+  for (let i=1; i<4; i++){
+
+    await prisma.activitie.create({
+      data: {
+        title: "Dev: montando o PC ideal",
+        capacity: 50,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(12,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(13, "hour").toDate(),
+      },
+    });
+
+    await prisma.activitie.create({
+      data: {
+        title: "Minecraft: montando o PC ideal",
+        capacity: 50,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(6,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(7, "hour").toDate(),
+      },
+    });
+  
+    await prisma.activitie.create({
+      data: {
+        title: "LoL: montando o PC ideal",
+        capacity: 50,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(7,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(8, "hour").toDate(),
+      },
+    });
+  
+    await prisma.activitie.create({
+      data: {
+        title: "Palestra Drivent",
+        capacity: 35,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(7,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(8, "hour").toDate(),
+      },
+    });
+  
+    await prisma.activitie.create({
+      data: {
+        title: "Workshop Games",
+        capacity: 20,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(6,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(7, "hour").toDate(),
+      },
+    });
+  
+    await prisma.activitie.create({
+      data: {
+        title: "Workshop Eventos",
+        capacity: 20,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(7,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(8, "hour").toDate(),
+      },
+    });
+  }
+  
+
   console.log({ event });
 }
 

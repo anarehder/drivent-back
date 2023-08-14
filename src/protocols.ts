@@ -50,5 +50,5 @@ export type Activity = {
 };
 
 export type ActivitiesByDayOfWeek = {
-  [dayOfWeek: number]: Activity[];
+  [dayOfWeek: string]: Activity[];
 };
