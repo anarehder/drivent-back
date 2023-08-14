@@ -39,3 +39,16 @@ export type RequestError = {
 export type TicketTypeId = {
   ticketTypeId: number;
 };
+
+export type Activity = {
+  id: number;
+  title: string;
+  capacity: number;
+  startsAt: Date;
+  endsAt: Date;
+  ActivitieBooking: { id: number }[]; // Substitua pelo tipo correto se necessário
+};
+
+export type ActivitiesByDayOfWeek = {
+  [dayOfWeek: string]: Activity[];
+};
