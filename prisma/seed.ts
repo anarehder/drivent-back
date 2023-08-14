@@ -145,14 +145,7 @@ async function main() {
 
   for (let i=1; i<4; i++){
 
-    await prisma.activitie.create({
-      data: {
-        title: "Dev: montando o PC ideal",
-        capacity: 50,
-        startsAt: dayjs().startOf('day').add(5*i, "days").add(12,"hour").toDate(),
-        endsAt: dayjs().startOf('day').add(5*i, "days").add(13, "hour").toDate(),
-      },
-    });
+    
 
     await prisma.activitie.create({
       data: {
@@ -174,9 +167,18 @@ async function main() {
   
     await prisma.activitie.create({
       data: {
+        title: "Dev: montando o PC ideal",
+        capacity: 50,
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(8,"hour").toDate(),
+        endsAt: dayjs().startOf('day').add(5*i, "days").add(9, "hour").toDate(),
+      },
+    });
+
+    await prisma.activitie.create({
+      data: {
         title: "Palestra Drivent",
         capacity: 35,
-        startsAt: dayjs().startOf('day').add(5*i, "days").add(7,"hour").toDate(),
+        startsAt: dayjs().startOf('day').add(5*i, "days").add(6,"hour").toDate(),
         endsAt: dayjs().startOf('day').add(5*i, "days").add(8, "hour").toDate(),
       },
     });
