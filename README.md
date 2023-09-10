@@ -110,7 +110,9 @@ Para exibir a lista de tickets use a rota:
   
 Para reservar um ticket na rota /tickets o body deve ter o formato:
 ```bash
-  { ticketTypeId: number }
+  {
+	"ticketTypeId": Number
+  }
 ```
 
 ### Payments
@@ -119,13 +121,14 @@ Para fazer um pagamento na rota /payments/process o body deve ter o formato:
 ```bash
   {
 	ticketId: number,
-	cardData: {
+	cardData:
+	{
 		issuer: string,
-    number: number,
-    name: string,
-    expirationDate: Date,
-    cvv: number
-  	}
+		number: number,
+		name: string,
+		expirationDate: Date,
+		cvv: number
+	}
   }
 ```
 
