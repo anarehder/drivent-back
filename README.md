@@ -1,76 +1,181 @@
-# Driven.t - Back-end
+# Drivent
 
-Back-end for Driven.t, an event management solution.
+## Descrição
 
-## About
+Organizar um evento nunca é uma tarefa fácil (se nem organizar festa de criança é fácil, imagine um evento de grande escala).
 
-Driven.t is a web browser application with which you can manage every single aspect of your event.
+Como quase pra tudo nessa vida, a tecnologia consegue dar uma mão nessa árdua tarefa possibilitando com que os próprios usuários, por exemplo, consigam gerenciar suas inscrições, participações, informações… etc.
 
-## How to run for development
+Além disso, criar uma base única digital para administrar os dados é o sonho de qualquer pessoa metódica.
 
-1. Clone this repository
-2. Install all dependencies
+A proposta é criar um sistema que gerencie apenas UM evento. Desta forma, para cada evento que o cliente quiser gerenciar, ele teria uma aplicação do Driven.t rodando. 
 
-```bash
-npm i
-```
+Certifiquse-se de ter as seguintes ferramentas instaladas e atualizadas no seu sistema: 
 
-3. Create a PostgreSQL database with whatever name you want
-4. Configure the `.env.development` file using the `.env.example` file (see "Running application locally or inside docker section" for details)
-5. Run all migrations
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
 
-```bash
-npm run dev:migration:run
-```
+## Tecnologias usadas
 
-6. Seed db
+O projeto feito com Node.js.
 
-```bash
-npm run dev:seed
-```
+O banco usado é o PostgresSQL e é gerenciado pelo Prisma.
 
-6. Run the back-end in a development environment:
+Para os testes é utilizado o Jest.
+
+Quer dar uma olhada no código front-end?  . [Drivent front](https://github.com/driven-15/drivent-front)  .
+
+## Instalação
+
+Siga estas etapas para configurar e executar o projeto localmente:
 
 ```bash
-npm run dev
+   git clone https://github.com/anarehder/drivent-back.git
+   cd drivent-back
 ```
 
-## How to run tests
-
-1. Follow the steps in the last section
-2. Configure the `.env.test` file using the `.env.example` file (see "Running application locally or inside docker" section for details)
-3. Run all migrations:
+### 1 - Instalar as dependencias
 
 ```bash
-npm run test:migration:run
+  npm install
 ```
 
-4. Run test:
+### 2 - Configurar a variavel de ambiente
+
+Crie um arquivo .env.development na raiz do projeto com a variavel de ambiente necessária. Você pode usar o arquivo .env.example como um modelo.
+
+### 3 - Configurar o banco de dados com o Prisma
+
+Execute as seguintes etapas
+```bash
+  npm run dev:migration:run
+  npm run dev:migration:generate
+  npm run dev:seed
+```
+
+### 4 - Execute o projeto em modo desenvolvimento
+
+```bash
+  npm run dev
+```
+
+## 5 - Uso
+
+- O funcionamento do Driven.t é *relativamente* simples:
+    1. Existe um cronômetro que libera o sistema apenas na data de início de cadastro do Evento.
+    2. O usuário deverá fazer uma inscrição para o Evento (*online* ou presencial).
+    3. Para um evento de modalidade presencial, o usuário poderá escolher se deseja com ou sem hospedagem (hotel).
+    4. O usuário também poderá escolher uma formas de pagamento.
+    5. Além disso, o usuário também escolhe as suas atividades no evento.
+    6. Por fim, também é possível emitir um certificado de participação do evento.
+       
+
+### As rotas disponíveis são:
+  -   users
+  -   auth
+  -   event
+  -   enrollments
+  -   tickets
+  -   payments
+  -   hotels
+  -   booking
+  -   activities
+
+Entre as rotas possuímos POST, GET, PUT e DELETE.
+
+O evento é adicionado diretamente via seed.
+
+Nas rotas autenticadas retorna status 401 Unauthorized caso falhe a autenticação.
+
+Na ausência de campos obrigatórios, retorne o status code 400 Bad Request.
+
+Se não houver nenhum registro compatível, retornar status code 404 Not Found.
+
+## Auth
+
+Para fazer login utilize a rota:
+- /auth/sign-in
+
+## Enrollments
+
+Para fazer seu cadastro completo utilize a rota:
+- /enrollments
+
+A rota /enrollments/cep faz a busca do endereço quando o CEP é digitado.
+
+## Tickets
+
+Para exibir a lista de tickets use a rota:
+- /tickets/types
+  
+Para reservar um ticket na rota /tickets o body deve ter o formato:
+```bash
+  { ticketTypeId: number }
+```
+
+### Payments
+
+Para fazer um pagamento na rota /payments/process o body deve ter o formato:
+```bash
+  {
+	ticketId: number,
+	cardData: {
+		issuer: string,
+    number: number,
+    name: string,
+    expirationDate: Date,
+    cvv: number
+  	}
+  }
+```
+
+Para saber o status de um pagamento utilize a rota abaixo:
+- /payments?ticketId=numeroDoTicket
+
+### Hotels
+
+Para exibir a lista de hoteis use a rota:
+- /hotels
+
+Para exibir a lista de quartos de um determinaado hotel
+- /hotels/:hotelId
+
+
+### Booking
+
+Para reservar um quarto ou trocar de quarto o body deve ter o formato:
+```bash
+  {
+	"roomId": Number
+  }
+```
+
+## 6 - Testes
+Crie um arquivo .env.test de maneira análoga ao .env.example mas crie um banco secundário para testes.
+
+Rode as migrações
+
+```bash
+  npm run test:migration:run
+  npm run test:migration:generate
+  npm run test:seed
+```
+
+Rode o teste
 
 ```bash
 npm run test
 ```
 
-## Building and starting for production
+Para um teste de uma feature específica
+
+```bash
+npm test NOME_FEATURE
+```
+
+## 7 - Para subir o projeto no modo de produção
 
 ```bash
 npm run build
 npm start
 ```
-
-## Running migrations or generate prisma clients
-
-Before running migrations make sure you have a postgres db running based on `.env.development` or `.env.test` file for each environment. You can start a postgres instance by typing `npm run dev:postgres` or `npm run test:postgres`. The host name is the name of the postgres container inside docker-compose file if you are running the application inside a docker container or localhost if you are running it locally.
-
-You can operate on databases for different environments, but it is necessary to populate correct env variables for each environment first, so in order to perform db operations type the following commands:
-
-- `npm run dev:migration:run` - run migrations for development environment by loading envs from .env.development file. It uses [dotenv-cli](https://github.com/entropitor/dotenv-cli#readme) to load envs from .env.development file.
-- `npm run test:migration:run` - the same, but for test environment
-
-- `npm run dev:migration:generate -- --name ATOMIC_OPERATION_NAME` - generate and run migration and prisma client for development environment by loading envs from .env.development file. Replace `ATOMIC_OPERATION_NAME` by the name of the migration you want to generate.
-
-## What to do when add new ENV VARIABLES
-
-There are several things you need to do when you add new ENV VARIABLES:
-- Add them to `.env.example` file
-- Add them to your local `.env.development` and `.env.test` files
