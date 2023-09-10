@@ -120,14 +120,14 @@ Para reservar um ticket na rota /tickets o body deve ter o formato:
 Para fazer um pagamento na rota /payments/process o body deve ter o formato:
 ```bash
   {
-	ticketId: number,
-	cardData:
+	"ticketId": number,
+	"cardData":
 	{
-		issuer: string,
-		number: number,
-		name: string,
-		expirationDate: Date,
-		cvv: number
+		"issuer": string,
+		"number": number,
+		"name": string,
+		"expirationDate": Date,
+		"cvv": number
 	}
   }
 ```
